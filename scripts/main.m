@@ -11,7 +11,7 @@ addpath(genpath(fullfile(projectRoot,"src")));
 
 % Choose dataset
 datasetName = "MVTec AD";
-partName = "screw";
+partName = "metal_nut";
 
 datasetPath = fullfile(projectRoot, "data", datasetName, partName);
 
