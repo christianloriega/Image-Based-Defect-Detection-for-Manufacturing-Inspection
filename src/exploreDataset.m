@@ -1,0 +1,44 @@
+function exploreDataset(imds) % no output: function displays images
+fprintf("===========================\n")
+fprintf("     DATASET SUMMARY\n")
+fprintf("===========================\n\n")
+
+numImages = numel(imds.Files);
+fprintf("Total Images: %d\n\n", numImages);
+
+labelTable = countEachLabel(imds);
+fprintf("Number of Classes: %d\n\n", height(labelTable));
+
+labelTable.Percent = 100 * labelTable.Count / numImages;
+disp(labelTable)
+
+% Bar Graph
+figure("Name","Dataset Bar Graph Distribution")
+bar(labelTable.Count);
+xticks(1:height(labelTable));
+xticklabels(string(labelTable.Label)); % Set x-axis labels to class names
+xtickangle(45)
+xlabel("Classes");
+ylabel("Number of Images");
+title("Class Distribution")
+grid on; % Add grid for better visualization
+
+% Display a sample images from the dataset
+figure("Name","Random Dataset Samples",...
+       "Position",[100 100 1200 800])
+tiledlayout(3,3)
+
+numShow = min(9, numImages);
+
+randImages = randperm(numImages, numShow);
+
+for i = 1:numShow
+    nexttile
+    idx = randImages(i);
+    img = readimage(imds,idx);
+    imshow(img);
+    title(string(imds.Labels(idx)))
+
+end
+
+end
