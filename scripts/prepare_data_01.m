@@ -53,21 +53,3 @@ disp(testTable);
 
 fprintf("Validation Data:\n");
 disp(valTable);
-
-%% Prepare Datastores for Training
-
-inputSize = [224 224 3];
-
-% Augmenter for Training Data
-augmenter = imageDataAugmenter(RandRotation= [-10 10], RandXTranslation=[-5 5], ...
-    RandYTranslation=[-5 5]);
-
-% Convert grayscale images to RGB so all images match
-% the 3-channel input required by ResNet-18.
-
-augTrain = augmentedImageDatastore(inputSize,imdsTrain, DataAugmentation=augmenter, ...
-    ColorPreprocessing="gray2rgb");
-
-augVal = augmentedImageDatastore(inputSize,imdsVal,ColorPreprocessing="gray2rgb");
-
-augTest = augmentedImageDatastore(inputSize,imdsTest,ColorPreprocessing="gray2rgb");
