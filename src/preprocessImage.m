@@ -1,14 +1,14 @@
 function [rgbImage, grayImage] = preprocessImage(inputImage) 
 
-% Resize image to match ResNet-18 input of 224 x 224, showing more pixels
+% Resize image to match network input size
 rgbImage = imresize(inputImage, [224 224]);  
 
-% Convert to grayscale for classical vision
-if size(rgbImage,3) == 3
-    grayImage = im2gray(rgbImage);
-else
-    grayImage = rgbImage;
+% Ensure image has three color channels
+if size(rgbImage,3) == 1
+    rgbImage = cat(3, rgbImage, rgbImage, rgbImage);
 end
 
+% Create grayscale version for classical vision
+grayImage = rgb2gray(rgbImage);
 
 end
