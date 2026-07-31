@@ -84,7 +84,7 @@ analyzeNetwork(net)
 % Such settings are the optimizer, number of training epochs, validation
 % data, and visualization of the training process. 
 
-options = trainingOptions("adam", InitialLearnRate= 1e-4, MaxEpochs= 10, MiniBatchSize= 32, ...
+options = trainingOptions("adam", InitialLearnRate= 1e-4, MaxEpochs= 20, MiniBatchSize= 32, ...
     Shuffle= "every-epoch", ValidationData= augVal, ...
     ValidationFrequency= 10, Plots= "training-progress", Verbose= true);
 
@@ -130,10 +130,27 @@ predictedLabels = scores2label(scores, categories(imdsTest.Labels));
 
 trueLabels = imdsTest.Labels;
 
+% Performance Metrics
+
 % Confusion Matrix
 
 figure;
+C = confusionmat(trueLabels, predictedLabels);
 confusionchart(trueLabels, predictedLabels);
+
+TN = C(1,1);
+FP = C(1,2);
+FN = C(2,1);
+TP = C(2,2);
+
+precision = TP / (TP + FP);
+recall = TP / (TP + FN);
+
+f1score = 2 * (precision * recall) / (precision + recall);
+
+fprintf("Precision: %.3f\n", precision);
+fprintf("Recall: %.3f\n", recall);
+fprintf("F1 Score: %.3f\n", f1score);
 
 title("Confusion Matrix - Test Set");
 
