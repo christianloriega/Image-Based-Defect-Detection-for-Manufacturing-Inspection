@@ -2,39 +2,80 @@
 % **********************************************************************
 % INDUSTRIAL IMAGE INSPECTOR USING RESNET 18 
 %*****************************************************************
-clc; clear; close all;
+% Dataset Setup for Scratch-Neck Detection
 
-% Data exploration and setup 
 
-% folder paths are extracted and placed in varaibles 
-passDir = fullfile('data', 'MVTec AD', 'screw', 'test', 'good');
-failDir = fullfile('data', 'MVTec AD', 'screw', 'test', 'scratch_neck');
+clc
+clear
+close all
 
-% make a cvs file 
-csvFilename = ("factory_inspection_meta.csv");
-if isfile(csvFilename)
-    delete(csvFilename)
+%% Project Paths
+
+scriptDir = fileparts(mfilename("fullpath"));
+projectRoot = fullfile(scriptDir, "..");
+
+addpath(fullfile(projectRoot, "src"));
+
+%% Dataset Folders
+
+datasetName = "MVTec AD";
+partName = "screw";
+
+passDir = fullfile( ...
+    projectRoot, ...
+    "data", ...
+    datasetName, ...
+    partName, ...
+    "test", ...
+    "good");
+
+failDir = fullfile( ...
+    projectRoot, ...
+    "data", ...
+    datasetName, ...
+    partName, ...
+    "test", ...
+    "scratch_neck");
+
+%% Validate Dataset Paths
+
+if ~isfolder(passDir)
+    error("PASS image folder was not found: %s", passDir);
 end
-% build the new csv file with the file paths of the imgaes we want to send 
-buildMetadataCSV(csvFilename,passDir,failDir);
-% we are making a table wiht the csv 
 
-metadataTable = readtable(csvFilename,'Delimiter',',');
+if ~isfolder(failDir)
+    error("FAIL image folder was not found: %s", failDir);
+end
+
+%% Create Metadata CSV
+
+resultsFolder = fullfile(projectRoot, "results");
+
+if ~isfolder(resultsFolder)
+    mkdir(resultsFolder);
+end
+
+csvFilename = fullfile( ...
+    resultsFolder, ...
+    "scratch_neck_metadata.csv");
+
+if isfile(csvFilename)
+    delete(csvFilename);
+end
 
 
+buildMetadataCSV(csvFilename, passDir, failDir);
 
-% making a datastrore so we can acces images 
-imds = imageDatastore(metadataTable.FilePath,'Labels',categorical(metadataTable.labels));
+metadataTable = readtable(csvFilename);
 
+%% Create Image Datastore
 
+imds = imageDatastore( ...
+    metadataTable.FilePath, ...
+    "Labels", categorical(metadataTable.Label));
 
-
-disp('Dataset Exploration: Label Counts & Balance Summary:');
+disp("Scratch-Neck Dataset Label Counts:");
 disp(countEachLabel(imds));
-
-
-
-
 
 
 %******************************************************************
@@ -198,25 +239,49 @@ end
 
 
 
+function buildMetadataCSV(filename, passDir, failDir)
+% buildMetadataCSV Create metadata for good and scratch-neck images.
 
-function buildMetadataCSV(filename,passDir,failDir) 
-% thes varibles will store the file path for the specific images 
-paths = {}; labels = {};
-f1 = dir(fullfile(passDir,"*.png"));
-for i = 1: numel(f1)
-    paths{end+1,1} = fullfile(passDir, f1(i).name);
-    labels{end+1,1} = "PASS";
-end
+    passFiles = dir(fullfile(passDir, "*.png"));
+    failFiles = dir(fullfile(failDir, "*.png"));
 
-f2 = dir(fullfile(failDir,"*.png"));
-for i = 1: numel(f2)
-    paths{end+1,1} = fullfile(failDir, f2(i).name);
-    labels{end+1,1} = "FAIL";
-end
+    passPaths = fullfile( ...
+        string({passFiles.folder})', ...
+        string({passFiles.name})');
 
-outTable = table(string(paths), string(labels), 'VariableNames',{'FilePath','labels'} );
-writetable(outTable,filename);
+    failPaths = fullfile( ...
+        string({failFiles.folder})', ...
+        string({failFiles.name})');
 
+    filePaths = [
+        passPaths
+        failPaths
+    ];
+
+    passLabels = repmat("PASS", numel(passPaths), 1);
+    failLabels = repmat("FAIL", numel(failPaths), 1);
+
+    labels = [
+        passLabels
+        failLabels
+    ];
+
+    filePaths = filePaths(:);
+    labels = labels(:);
+
+    if height(filePaths) ~= height(labels)
+        error( ...
+            "File path count (%d) does not match label count (%d).", ...
+            height(filePaths), ...
+            height(labels));
+    end
+
+    metadataTable = table(filePaths, labels);
+
+    metadataTable.Properties.VariableNames = ...
+        {'FilePath', 'Label'};
+
+    writetable(metadataTable, filename);
 end
 
 % custom funciton that takes an image data set adn applies a filter to make

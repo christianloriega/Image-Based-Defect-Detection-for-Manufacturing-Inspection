@@ -14,17 +14,14 @@ addpath(fullfile(projectRoot, "src"));
 datasetName = "MVTec AD";
 partName = "screw";
 
-datasetFolder = fullfile( ...
-    projectRoot, ...
-    "data", ...
-    datasetName, ...
+datasetFolder = fullfile(projectRoot, "data", datasetName, ...
     partName);
 
 imds = loadDataset(datasetFolder);
 
 % Select Random Good Sample
 
-goodImages = find(imds.Labels == "good");
+goodImages = find(imds.Labels == "manipulated_front");
 goodIndex = goodImages(randi(length(goodImages)));
 
 inputImage = readimage(imds, goodIndex);

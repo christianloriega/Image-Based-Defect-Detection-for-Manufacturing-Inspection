@@ -28,8 +28,12 @@ overlayStorage   = cell(numTest, 1);
 fprintf('Running Hybrid Inspection Pipeline across test set...\n');
 for i = 1:numTest
     % Read raw image
-    imgPath = imdsTest.Files{i};
-    I = imread(imgPath);
+   imgPath = imdsTest.Files{i};
+if ~isfile(imgPath)
+    warning('Image not found, skipping: %s', imgPath);
+    continue;
+end
+I = imread(imgPath);
     
     % Execute hybrid inspector deliverable function
     [finalLabel, confidenceScore, evidenceOverlay, evidenceMetrics, baselineDecision] = inspectpart(I);
