@@ -2,6 +2,9 @@
 
 A MATLAB-based manufacturing inspection system that combines classical computer vision and a ResNet-18 deep learning classifier to detect defects in MVTec AD screw images. The system classifies parts as PASS or FAIL and evaluates performance under varying imaging conditions.
 
+<br><br>
+
+
 <p align="center">
   <img src="results/images/fail_image_01.png" width="850">
 </p>
@@ -10,9 +13,14 @@ A MATLAB-based manufacturing inspection system that combines classical computer 
   <em>Example hybrid inspection result showing a defective screw classified as FAIL.</em>
 </p>
 
+<br><br>
+
+
 ## Project Overview
 
 This project was developed as part of the MathWorks Workplace Challenge. The inspection pipeline integrates image preprocessing, feature extraction, transfer learning, and robustness testing to simulate an automated manufacturing quality inspection system.
+
+
 
 
 ## Repository Structure
@@ -29,6 +37,9 @@ project/
 └── README.md           # Project overview and setup instructions
 ```
 
+
+
+
 ## Requirements
 
 This project was developed in MATLAB using the following products:
@@ -38,6 +49,8 @@ This project was developed in MATLAB using the following products:
 - Image Processing Toolbox
 
 The project uses a pretrained ResNet-18 network for transfer learning.
+
+
 
 
 ## Dataset Setup
@@ -64,6 +77,8 @@ data/
 The project scripts assume this directory structure and will automatically load the dataset from this location.
 
 
+
+
 ## How to Run the Project
 
 1. Clone or download this repository.
@@ -71,6 +86,8 @@ The project scripts assume this directory structure and will automatically load 
 3. Open MATLAB and set the repository folder as the current folder.
 4. Open the main MATLAB Live Script located in the `documentation/` folder.
 5. Run the Live Script sections in order to reproduce the dataset preparation, preprocessing, training, evaluation, and robustness testing results.
+
+
 
 
 ## Project Workflow
@@ -83,6 +100,7 @@ The project follows five main stages:
 4. ResNet-18 classification training
 5. System evaluation (AI, Hybrid, Classical)
 6. Robustness testing under simulated image variations
+
 
 
 ## Results
