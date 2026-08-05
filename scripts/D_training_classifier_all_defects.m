@@ -1,3 +1,7 @@
+% Train a baseline ResNet-18 classifier using the complete MVTec AD screw dataset.
+%
+% This script performs transfer learning, evaluates the trained network, and
+% saves the model for later inspection experiments.
 clc
 clear
 close all
