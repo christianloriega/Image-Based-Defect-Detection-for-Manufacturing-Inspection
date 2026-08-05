@@ -1,5 +1,10 @@
-% Classical computer vision pipeline for detecting front-tip defects in screw images
-% from MVTec AD dataset.
+% Classical Evidence Extraction
+%
+% This script documents the development of the classical vision pipeline.
+% The initial implementation focused on classical computer vision pipeline 
+% for detecting front-tip defects in screw images before being being pushed 
+% into the complete hybrid inspection system.
+
 
 % This script:
 %   1. Detects the screw ROI.
