@@ -4,12 +4,14 @@ clc
 clear
 close all
 
+%% Project Setup
+
 scriptDir = fileparts(mfilename("fullpath"));
 projectRoot = fullfile(scriptDir, "..");
 
 addpath(fullfile(projectRoot, "src"));
 
-% Load Dataset
+%% Load Dataset
 
 datasetName = "MVTec AD";
 partName = "screw";
@@ -22,36 +24,41 @@ datasetFolder = fullfile( ...
 
 imds = loadDataset(datasetFolder);
 
-% Select Random Good Sample
+%% Select Random Sample
 
-goodImages = find(imds.Labels == "good");
-goodIndex = goodImages(randi(length(goodImages)));
+defectImages = find(imds.Labels == "scratch_neck");
 
-inputImage = readimage(imds, goodIndex);
+if isempty(defectImages)
+    error("No manipulated_front images were found in the dataset.");
+end
 
-% Run Inspection
+defectIndex = defectImages(randi(numel(defectImages)));
+inputImage = readimage(imds, defectIndex);
+
+%% Run Inspection
 
 [finalLabel, aiLabel, confidenceScore, evidenceOverlay, ...
     evidenceMetrics, baselineDecision] = inspectPart(inputImage);
 
-% Display Results
+%% Display Results
 
 figure
 imshow(evidenceOverlay)
 title("Final Hybrid Decision: " + string(finalLabel))
 
-fprintf("      Hybrid Inspection Results\n");
+fprintf("\n");
+fprintf("Hybrid Inspection Results\n");
 fprintf("========================================\n\n");
 
 fprintf("AI Inspection\n");
 fprintf("------------------------------\n");
-fprintf("Decision         : %s\n", aiLabel);
+fprintf("Decision         : %s\n", string(aiLabel));
 fprintf("Confidence       : %.1f%%\n", confidenceScore * 100);
 
 fprintf("\nClassical Inspection\n");
 fprintf("------------------------------\n");
-fprintf("Decision         : %s\n", baselineDecision);
-fprintf("Detected Defect  : %s\n", evidenceMetrics.DetectedDefect);
+fprintf("Decision         : %s\n", string(baselineDecision));
+fprintf("Detected Defect  : %s\n", string(evidenceMetrics.DetectedDefect));
 
 if evidenceMetrics.FrontDecision == "FAIL"
 
@@ -80,17 +87,17 @@ end
 
 fprintf("\nFinal Hybrid Decision\n");
 fprintf("------------------------------\n");
-fprintf("Decision         : %s\n", finalLabel);
+fprintf("Decision         : %s\n", string(finalLabel));
 
 fprintf("\nSystem Summary\n");
 fprintf("------------------------------\n");
 
 if aiLabel == baselineDecision
 
-    fprintf("Status           : AI and classical inspection AGREE ✓\n");
+    fprintf("Status           : AI and classical inspection AGREE✓\n");
 
 else
 
-    fprintf("Status           : AI and classical inspection DISAGREE ⚠\n");
+    fprintf("Status           : AI and classical inspection DISAGREE⚠\n");
 
 end

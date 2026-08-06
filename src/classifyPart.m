@@ -13,7 +13,7 @@ imds = augmentedImageDatastore([224 224 3], rgbImage);
 
 scores = minibatchpredict(net, imds);
 
-aiLabel = scores2label(scores, ["PASS", "FAIL"]);
+aiLabel = scores2label(scores, ["FAIL", "PASS"]);
 
 aiScore = max(scores);
 
