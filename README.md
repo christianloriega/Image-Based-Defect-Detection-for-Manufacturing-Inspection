@@ -1,6 +1,7 @@
 # Image-Based Defect Detection for Manufacturing Inspection
 
-A MATLAB-based manufacturing inspection system that combines classical computer vision and a ResNet-18 deep learning classifier to detect defects in MVTec AD screw images. The system classifies parts as PASS or FAIL and evaluates performance under varying imaging conditions.
+# PROJECT OBJECTIVE:
+Incorporates classical computer vision methods and use transfer learning with Resnet-18 to detect defects in MVTec AD screw images. The system classifies parts as PASS or FAIL and evaluates deficiencies based on Binary mask, segmentations, overlays, contras and other image processing techniques.
 
 
 <br><br>
@@ -15,6 +16,7 @@ A MATLAB-based manufacturing inspection system that combines classical computer 
 </p>
 
 
+
 <br><br>
 
 
@@ -27,6 +29,11 @@ This project was developed as part of the MathWorks Workplace Challenge. The ins
 
 ## Repository Structure
 
+
+
+## Project Files: 
+
+
 ```text
 project/
 ├── data/               # MVTec AD Screw dataset (download separately)
@@ -36,21 +43,29 @@ project/
 ├── results/            # Evaluation results, plots, and confusion matrices
 ├── scripts/            # Main workflow scripts
 ├── src/                # Reusable MATLAB helper functions
-└── README.md           # Project overview and setup instructions
+└── README.md           # a summary of project objectives/libraries/models/organization/dependencies 
+└── live script         # an overview of the code with descriptions of how and why it was use 
+          
 ```
+
 
 
 
 
 ## Requirements
 
+## Project Dependencies and Tools
+
+
 This project was developed in MATLAB using the following products:
 
 - MATLAB 2026a
 - Deep Learning Toolbox
 - Image Processing Toolbox
+- ResNet-18 Pretrained Network
 
-The project uses a pretrained ResNet-18 network for transfer learning.
+
+
 
 
 
@@ -81,7 +96,11 @@ The project scripts assume this directory structure and will automatically load 
 
 
 
+
 ## How to Run the Project
+
+## How to Run the Project code and model:
+
 
 1. Clone or download this repository.
 2. Download and place the MVTec AD Screw dataset in the required `data/MVTec AD/screw/` directory.
@@ -98,10 +117,11 @@ The project follows five main stages:
 
 1. Dataset preparation and label selection
 2. Image preprocessing
-3. Classical computer vision and feature extraction
+3. Segmentation and overlays 
 4. ResNet-18 classification training
 5. System evaluation (AI, Hybrid, Classical)
-6. Robustness testing under simulated image variations
+6. Testing under simulated image variations
+
 
 
 

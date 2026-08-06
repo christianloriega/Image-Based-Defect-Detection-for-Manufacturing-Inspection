@@ -1,1 +1,0 @@
-# Image-Based-Defect-Detection-for-Manufacturing-Inspection
