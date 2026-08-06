@@ -29,7 +29,7 @@ project/
           
 ```
 
-## Project Dependencies 
+## Project Dependencies and Tools
 
 This project was developed in MATLAB using the following products:
 
@@ -81,8 +81,8 @@ The project follows five main stages:
 
 1. Dataset preparation and label selection
 2. Image preprocessing
-3. Classical computer vision and feature extraction
+3. Segmentation and overlays 
 4. ResNet-18 classification training
 5. System evaluation (AI, Hybrid, Classical)
-6. Robustness testing under simulated image variations
+6. testing under simulated image variations
 
