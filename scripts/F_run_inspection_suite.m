@@ -13,10 +13,7 @@ addpath(fullfile(projectRoot, "src"));
 
 % Load the focused held-out test set
 
-splitFile = fullfile( ...
-    projectRoot, ...
-    "models", ...
-    "focused_dataset_split.mat");
+splitFile = fullfile(projectRoot, "models", "focused_dataset_split.mat");
 
 load(splitFile, "imdsTest");
 

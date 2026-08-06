@@ -26,7 +26,7 @@ imds = loadDataset(datasetFolder);
 
 %% Select Random Sample
 
-defectImages = find(imds.Labels == "manipulated_front");
+defectImages = find(imds.Labels == "scratch_neck");
 
 if isempty(defectImages)
     error("No manipulated_front images were found in the dataset.");
