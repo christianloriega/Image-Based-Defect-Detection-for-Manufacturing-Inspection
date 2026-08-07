@@ -8,7 +8,7 @@ Incorporates classical computer vision methods and use transfer learning with Re
 
 
 <p align="center">
-  <img src="results/images/fail_image_01.png" width="850">
+  <img src="results/images/fail_image_cropped.png" width="850">
 </p>
 
 <p align="center">

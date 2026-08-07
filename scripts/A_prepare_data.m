@@ -5,35 +5,29 @@ clc
 clear
 close all
 
-%% Project Setup
+% Project Setup
 
 scriptDir = fileparts(mfilename("fullpath"));
 projectRoot = fullfile(scriptDir, "..");
 
 addpath(genpath(fullfile(projectRoot, "src")));
 
-%% Dataset Selection
+% Dataset Selection
 
 datasetName = "MVTec AD";
 partName = "screw";
 
-datasetFolder = fullfile( ...
-    projectRoot, ...
-    "data", ...
-    datasetName, ...
-    partName);
+datasetFolder = fullfile( projectRoot, "data", datasetName, partName);
 
-%% Validate Dataset Path
+% Validate Dataset Path
 
 if ~isfolder(datasetFolder)
 
-    error( ...
-        "Dataset folder was not found:\n%s", ...
-        datasetFolder);
+    error("Dataset folder was not found:\n%s", datasetFolder);
 
 end
 
-%% Load Complete Dataset
+% Load Complete Dataset
 
 imdsAll = loadDataset(datasetFolder);
 
@@ -45,11 +39,11 @@ fprintf("Part Type        : %s\n", partName);
 fprintf("Dataset Location : %s\n\n", datasetFolder);
 
 
-%% Explore Complete Dataset
+% Explore Complete Dataset Function
 
 exploreDataset(imdsAll);
 
-%% Select Final Project Classes
+% Select Final Project Classes
 
 selectedLabels = ["good", "manipulated_front", "scratch_neck"];
 
@@ -69,7 +63,7 @@ fprintf("\nFocused Dataset Distribution\n");
 fprintf("----------------------------------------\n");
 disp(countEachLabel(imdsFocused));
 
-%% Convert Focused Labels to PASS and FAIL for Summary
+% Convert Focused Labels to PASS and FAIL for Summary
 
 binaryLabels = string(imdsFocused.Labels);
 
@@ -93,11 +87,9 @@ fprintf("\nBinary Classification Distribution\n");
 fprintf("----------------------------------------\n");
 disp(binarySummary);
 
-fprintf("PASS Images      : %d (%.2f%%)\n", ...
-    numPass, passPercent);
+fprintf("PASS Images      : %d (%.2f%%)\n", numPass, passPercent);
 
-fprintf("FAIL Images      : %d (%.2f%%)\n", ...
-    numFail, failPercent);
+fprintf("FAIL Images      : %d (%.2f%%)\n", numFail, failPercent);
 
 fprintf("PASS-to-FAIL Ratio: %.2f to 1\n", classRatio);
 

@@ -14,8 +14,6 @@
 %   5. Applies a rule-based baseline classifier.
 
 
-%% Project Setup
-
 clc
 clear
 close all
@@ -25,7 +23,7 @@ projectRoot = fullfile(scriptDir, "..");
 
 addpath(fullfile(projectRoot, "src"));
 
-%% Load Dataset
+% Load Dataset
 
 datasetName = "MVTec AD";
 partName = "screw";
@@ -33,14 +31,14 @@ datasetFolder = fullfile(projectRoot, "data", datasetName,partName);
 
 imds = loadDataset(datasetFolder);
 
-%% Select Random Manipulated Front Sample
+% Select Random Manipulated Front Sample
 
 manipulatedFrontImages = find(imds.Labels == "manipulated_front");
 manipulatedFrontIndex = manipulatedFrontImages(randi(length(manipulatedFrontImages)));
 
 inputImage = readimage(imds,manipulatedFrontIndex);
 
-%% Standardize Input Image
+% Standardize Input Image
 
 [rgbImage, grayImage] = preprocessImage(inputImage);
 
