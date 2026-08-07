@@ -7,14 +7,14 @@ clc
 clear
 close all
 
-%% Project Setup
+% Project Setup
 
 scriptDir = fileparts(mfilename("fullpath"));
 projectRoot = fullfile(scriptDir, "..");
 
 addpath(fullfile(projectRoot, "src"));
 
-%% Load Dataset
+% Load Dataset
 
 datasetName = "MVTec AD";
 partName = "screw";
@@ -24,7 +24,7 @@ partName);
 
 imds = loadDataset(datasetFolder);
 
-%% Display Project Scope
+% Display Project Scope
 
 selectedLabels = ["good", "manipulated_front", "scratch_neck"];
 
@@ -43,11 +43,11 @@ fprintf("Focused Dataset Distribution\n");
 fprintf("----------------------------------------\n");
 disp(countEachLabel(imdsFocused));
 
-%% Read Example Image
+% Read Example Image
 
 inputImage = readimage(imdsFocused, 1);
 
-%% Preprocess Image
+% Preprocess Image
 
 % preprocessImage returns:
 %   rgbImage  - resized RGB image used by ResNet-18
@@ -55,7 +55,7 @@ inputImage = readimage(imdsFocused, 1);
 
 [rgbImage, grayImage] = preprocessImage(inputImage);
 
-%% Display Preprocessing Results
+% Display Preprocessing Results
 
 figure("Name", "Preprocessing Pipeline", "Position", [100 100 1200 450]);
 
