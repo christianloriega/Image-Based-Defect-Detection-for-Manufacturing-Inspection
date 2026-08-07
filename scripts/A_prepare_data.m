@@ -17,19 +17,13 @@ addpath(genpath(fullfile(projectRoot, "src")));
 datasetName = "MVTec AD";
 partName = "screw";
 
-datasetFolder = fullfile( ...
-    projectRoot, ...
-    "data", ...
-    datasetName, ...
-    partName);
+datasetFolder = fullfile( projectRoot, "data", datasetName, partName);
 
 %% Validate Dataset Path
 
 if ~isfolder(datasetFolder)
 
-    error( ...
-        "Dataset folder was not found:\n%s", ...
-        datasetFolder);
+    error("Dataset folder was not found:\n%s", datasetFolder);
 
 end
 
@@ -93,11 +87,9 @@ fprintf("\nBinary Classification Distribution\n");
 fprintf("----------------------------------------\n");
 disp(binarySummary);
 
-fprintf("PASS Images      : %d (%.2f%%)\n", ...
-    numPass, passPercent);
+fprintf("PASS Images      : %d (%.2f%%)\n", numPass, passPercent);
 
-fprintf("FAIL Images      : %d (%.2f%%)\n", ...
-    numFail, failPercent);
+fprintf("FAIL Images      : %d (%.2f%%)\n", numFail, failPercent);
 
 fprintf("PASS-to-FAIL Ratio: %.2f to 1\n", classRatio);
 
